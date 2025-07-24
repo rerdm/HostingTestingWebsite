@@ -90,7 +90,7 @@
                     </div>
 
                     <!-- Login Form -->
-                    <form class="space-y-6" method="POST" action="login.php">
+                    <form class="space-y-6" method="POST" action="#" id="loginForm">
                         <!-- Benutzername Feld -->
                         <div class="input-group">
                             <input
@@ -162,22 +162,8 @@
                         </div>
                     </form>
 
-                    <?php
-                    // Einfache Login-Verarbeitung (für Demo-Zwecke)
-                    if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST') {
-                        $username = $_POST['username'] ?? '';
-                        $password = $_POST['password'] ?? '';
-                        
-                        // Hier würden Sie normalerweise die Datenbank überprüfen
-                        // Für Demo-Zwecke zeigen wir nur eine Nachricht
-                        if (!empty($username) && !empty($password)) {
-                            echo '<div class="mt-6 p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg">';
-                            echo '<p class="text-center">Login-Versuch für Benutzer: <strong>' . htmlspecialchars($username) . '</strong></p>';
-                            echo '<p class="text-center text-sm mt-2">In einer echten Anwendung würde hier die Datenbank-Authentifizierung stattfinden.</p>';
-                            echo '</div>';
-                        }
-                    }
-                    ?>
+                    <!-- Login Result (wird von JavaScript gefüllt) -->
+                    <div id="loginResult" class="mt-6 hidden"></div>
                 </div>
             </div>
         </section>
@@ -210,7 +196,50 @@
                     this.parentElement.classList.remove('input-focused');
                 });
             });
+
+            // Login Form Handler für statische Website
+            const loginForm = document.getElementById('loginForm');
+            const loginResult = document.getElementById('loginResult');
+            
+            if (loginForm) {
+                loginForm.addEventListener('submit', function(e) {
+                    e.preventDefault(); // Verhindert das Standard-Submit
+                    
+                    const username = document.getElementById('username').value;
+                    const password = document.getElementById('password').value;
+                    
+                    if (username && password) {
+                        // Zeige Erfolgs-Nachricht (für Demo-Zwecke)
+                        loginResult.innerHTML = `
+                            <div class="p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg">
+                                <p class="text-center">✅ Login-Versuch für Benutzer: <strong>${escapeHtml(username)}</strong></p>
+                                <p class="text-center text-sm mt-2">In einer echten Anwendung würde hier die Server-Authentifizierung stattfinden.</p>
+                                <p class="text-center text-xs mt-2 text-green-600">Dies ist eine Demo für eine statische Website auf GitHub Pages.</p>
+                            </div>
+                        `;
+                        loginResult.classList.remove('hidden');
+                        
+                        // Scroll zur Nachricht
+                        loginResult.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    } else {
+                        // Zeige Fehler-Nachricht
+                        loginResult.innerHTML = `
+                            <div class="p-4 bg-red-100 border border-red-400 text-red-700 rounded-lg">
+                                <p class="text-center">❌ Bitte füllen Sie alle Felder aus.</p>
+                            </div>
+                        `;
+                        loginResult.classList.remove('hidden');
+                    }
+                });
+            }
         });
+
+        // HTML escaping function für Sicherheit
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
     </script>
 </body>
 </html>
