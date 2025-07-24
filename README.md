@@ -2,45 +2,43 @@
 
 A modern coffee shop website project designed for static hosting on GitHub Pages. This project demonstrates how to build and deploy a responsive web application using Tailwind CSS with automated deployment pipelines.
 
-# Table of Contents
+## 📋 Table of Contents
 
-- [📖 Project Overview](#-project-overview)
-- [🚀 Quick Start Guide](#-quick-start-guide)
-  - [Git Clone & Setup](#git-clone--setup)
-  - [Local Development with Five Server](#local-development-with-five-server)
-- [🌐 GitHub Pages Deployment](#-github-pages-deployment)
-  - [GitHub Pages Capabilities & Limitations](#github-pages-capabilities--limitations)
-  - [Manual Deployment Steps](#manual-deployment-steps)
-- [⚙️ Pipeline Integration](#️-pipeline-integration)
-  - [GitHub Actions Workflow](#github-actions-workflow)
-  - [Automated PHP to HTML Conversion](#automated-php-to-html-conversion)
-  - [Component Integration for Static Deployment](#component-integration-for-static-deployment)
-- [🛠️ Technical Details](#️-technical-details)
-- [📁 Project Structure](#-project-structure)
-- [🎨 Tailwind CSS Integration](#-tailwind-css-integration)
-- [📱 Responsive Design](#-responsive-design)
-- [🔧 Troubleshooting](#-troubleshooting)
-- [📄 License](#-license)
+- [1. Project Overview](#1-project-overview)
+- [2. Local Testing the Website with FiveServer](#2-local-testing-the-website-with-fiveserver)
+  - [2.1 Install Five Server Extension](#21-install-five-server-extension)
+  - [2.2 Configure Five Server](#22-configure-five-server)
+  - [2.3 Start Local Development](#23-start-local-development)
+- [3. GitHub Pages Deployment](#3-github-pages-deployment)
+  - [3.1 GitHub Pages Capabilities & Limitations](#31-github-pages-capabilities--limitations)
+    - [3.1.1 What GitHub Pages CAN do](#311-what-github-pages-can-do)
+    - [3.1.2 What GitHub Pages CANNOT do](#312-what-github-pages-cannot-do)
+- [4. Pipeline Integration](#4-pipeline-integration)
+  - [4.1 Workflow Configuration](#41-workflow-configuration)
+  - [4.2 Enable GitHub Pages](#42-enable-github-pages)
+- [5. Manual Deployment Steps](#5-manual-deployment-steps)
+  - [5.1 Upload Files via Git to trigger the Pipeline](#51-upload-files-via-git-to-trigger-the-pipeline)
+  - [5.2 Access Your Website](#52-access-your-website)
 
-## 1 Project Overview
+## 1. Project Overview
 
-This project is a **static coffee shop website** specifically designed for hosting on **GitHub Pages**. This Wbsite ca nbe uses for webtesting purposes. It features:
+This project is a **static coffee shop website** specifically designed for hosting on **GitHub Pages**. This Website can be used for web testing purposes. It features:
 
 - ✅ **Static HTML/CSS/JavaScript** - No server-side processing required
 - ✅ **Responsive Design** - Mobile-first approach with Tailwind CSS
 - ✅ **Automated Deployment** - GitHub Actions pipeline for seamless deployment
 - ❌ This website does **not** feature any **database interactions**. All content is static and does not rely on backend data storage or dynamic database queries.
 
-## 2 Local testing the Website with FiveServer
+## 2. Local Testing the Website with FiveServer
 
-**Five Server Configuration** for optimal local testing (in this configurration we dont use PHP because is not workung on Github Pages) :
+**Five Server Configuration** for optimal local testing (in this configuration we don't use PHP because it's not working on GitHub Pages):
 
 ### 2.1 Install Five Server Extension 
 Install the FiveServer extension.
 
 ### 2.2 Configure Five Server
 
-Create a `fiveserver.config.js`in the root directory
+Create a `fiveserver.config.js` in the root directory:
 
    ```javascript
    module.exports = {
@@ -49,16 +47,15 @@ Create a `fiveserver.config.js`in the root directory
    ```
 
 ### 2.3 Start Local Development
-   - Right-click on `index.php`
-   - Select "Open with Five Server" in th eupper navigation baar
-   - Website opens at `http://localhost:5500`
+- Right-click on `index.php`
+- Select "Open with Five Server" in the upper navigation bar
+- Website opens at `http://localhost:5500`
 
-
-## 3 GitHub Pages Deployment
+## 3. GitHub Pages Deployment
 
 ### 3.1 GitHub Pages Capabilities & Limitations
 
-Github Pages has some limitation in Hosting resoruces. See below.
+GitHub Pages has some limitations in hosting resources. See below.
 
 #### 3.1.1 What GitHub Pages CAN do
 - Host static HTML, CSS, JavaScript files
@@ -73,7 +70,9 @@ Github Pages has some limitation in Hosting resoruces. See below.
 - Dynamic content generation
 - File uploads to server
 
-### 4.2 Pipeline Integration (Workflow)
+## 4. Pipeline Integration
+
+### 4.1 Workflow Configuration
 
 ```yaml
 name: Deploy to GitHub Pages
@@ -152,30 +151,28 @@ jobs:
 ```
 
 
-### 4.3 Enable GitHub Pages
-   - Go to repository **Settings**
-   - Navigate to **Pages** section
-   - Source: **Deploy from a branch**
-   - Branch: **master** / **main**
-   - Folder: **/ (root)**
-   - Click **Save**
+### 4.2 Enable GitHub Pages
+- Go to repository **Settings**
+- Navigate to **Pages** section
+- Source: **Github Actions**
+- Click **Save**
 
-## 5 Manual Deployment Steps (on push)
+## 5. Manual Deployment Steps
 
-At the moment the pipeline will be striggered onyl on `push`.
-Other triggers need to be implementes (eg. `workflow_dispatch`)
+At the moment the pipeline will be triggered only on `push`.
+Other triggers need to be implemented (eg. `workflow_dispatch`)
 
-## 5.2 Upload Files via Git to trigger the Pipeleine - Deployment
-   ```bash
-   git add .
-   git commit -m "<commit message>"
-   git push origin master
-   ```
+### 5.1 Upload Files via Git to trigger the Pipeline
+```bash
+git add .
+git commit -m "<commit message>"
+git push origin master
+```
 
-## 5.3 Access Your Website:
-   ```
-   URL: https://<username>.github.io/<repository-name>/
-   ```
+### 5.2 Access Your Website
+```
+URL: https://<username>.github.io/<repository-name>/
+```
 
 
 
