@@ -21,70 +21,57 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.2'
-
-      - name: Convert PHP to HTML
+      - name: Convert PHP to HTML and copy assets
         run: |
           # Create output directory
           mkdir -p dist
           
           # Copy images directory
-          cp -r images dist/
+          if [ -d "images" ]; then
+            cp -r images dist/
+          fi
           
-          # Convert index.php to index.html
-          php -f index.php > dist/index.html
+          # Copy PHP files as HTML (since they now contain static content)
+          if [ -f "index.php" ]; then
+            cp index.php dist/index.html
+          fi
           
-          # Convert other PHP files if they exist
           if [ -f "about.php" ]; then
-            php -f about.php > dist/about.html
+            cp about.php dist/about.html
           fi
           
           if [ -f "shop.php" ]; then
-            php -f shop.php > dist/shop.html
+            cp shop.php dist/shop.html
           fi
           
           if [ -f "register.php" ]; then
-            php -f register.php > dist/register.html
+            cp register.php dist/register.html
           fi
           
           if [ -f "login.php" ]; then
-            php -f login.php > dist/login.html
+            cp login.php dist/login.html
           fi
           
           if [ -f "agb.php" ]; then
-            php -f agb.php > dist/agb.html
+            cp agb.php dist/agb.html
           fi
 
-      - name: Copy includes directory
+      - name: Fix remaining PHP tags and links
         run: |
-          # Copy includes directory to maintain structure
-          if [ -d "includes" ]; then
-            cp -r includes dist/
-          fi
-      - name: Fix HTML links
-        run: |
-          # Replace .php links with .html in all HTML files
+          # Remove any remaining PHP opening/closing tags
+          find dist -name "*.html" -type f -exec sed -i 's/<?php[^>]*>//g' {} \;
+          find dist -name "*.html" -type f -exec sed -i 's/?>//g' {} \;
+          
+          # Ensure all links point to .html files
           find dist -name "*.html" -type f -exec sed -i 's/href="\([^"]*\)\.php"/href="\1.html"/g' {} \;
           find dist -name "*.html" -type f -exec sed -i 's/action="\([^"]*\)\.php"/action="\1.html"/g' {} \;
           
-          # Specific fixes for common navigation patterns
-          find dist -name "*.html" -type f -exec sed -i 's/href="index\.php"/href="index.html"/g' {} \;
-          find dist -name "*.html" -type f -exec sed -i 's/href="about\.php"/href="about.html"/g' {} \;
-          find dist -name "*.html" -type f -exec sed -i 's/href="shop\.php"/href="shop.html"/g' {} \;
-          find dist -name "*.html" -type f -exec sed -i 's/href="login\.php"/href="login.html"/g' {} \;
-          find dist -name "*.html" -type f -exec sed -i 's/href="register\.php"/href="register.html"/g' {} \;
-          find dist -name "*.html" -type f -exec sed -i 's/href="agb\.php"/href="agb.html"/g' {} \;
-          
-          # Debug: Show what files were created and their links
+          # Debug: Show what files were created
           echo "Created files:"
           ls -la dist/
-          echo "Sample links in index.html:"
-          grep -n "href=" dist/index.html | head -10 || true
-          echo "Login links found:"
-          grep -n "login" dist/index.html || true
+          echo "Sample content from index.html:"
+          head -10 dist/index.html || true
+
       - name: Setup Pages
         uses: actions/configure-pages@v4
 
