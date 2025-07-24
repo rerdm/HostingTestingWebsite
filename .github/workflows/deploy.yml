@@ -35,6 +35,8 @@ jobs:
 
           cp agb.html dist/agb.html
 
+          cp under_construction.html dist/under_construction.html
+
       - name: Fix remaining PHP tags and links
         run: |
           # Remove any remaining PHP opening/closing tags

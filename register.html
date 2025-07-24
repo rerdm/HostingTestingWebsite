@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Testing-CoffeShop | Registrierung</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Tailwind CSS Custom Configuration -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    animation: {
+                        'fade-in-up': 'fadeInUp 0.8s ease-out',
+                        'pulse-slow': 'pulse 2s ease-in-out infinite',
+                        'bounce-in': 'bounceIn 0.6s ease-out',
+                    },
+                    keyframes: {
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(30px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        bounceIn: {
+                            '0%': { opacity: '0', transform: 'scale(0.3)' },
+                            '50%': { opacity: '1', transform: 'scale(1.05)' },
+                            '70%': { transform: 'scale(0.9)' },
+                            '100%': { opacity: '1', transform: 'scale(1)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* Schöne Input-Effekte */
+        .input-group {
+            position: relative;
+        }
+        
+        .input-label {
+            position: absolute;
+            top: 50%;
+            left: 1rem;
+            transform: translateY(-50%);
+            transition: all 0.3s ease;
+            pointer-events: none;
+            color: #78716c;
+        }
+        
+        /* Spezielle Anpassung für Felder mit zusätzlichem Content */
+        .input-group.has-helper .input-label {
+            top: calc(50% - 12px); /* Berücksichtigt den zusätzlichen Platz für Helper-Text */
+        }
+        
+        .input-field:focus + .input-label,
+        .input-field:not(:placeholder-shown) + .input-label {
+            top: -0.5rem;
+            left: 0.75rem;
+            font-size: 0.875rem;
+            color: #d97706;
+            background: white;
+            padding: 0 0.25rem;
+        }
+        
+        /* Passwort-Stärke Indikator */
+        .password-strength {
+            height: 4px;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+        
+        /* Kaffee-Animation für den Hintergrund */
+        .coffee-bg {
+            background: linear-gradient(135deg, #fef3c7 0%, #f3e8d2 100%);
+        }
+        
+        /* Checkbox Custom Style */
+        .custom-checkbox {
+            appearance: none;
+            background-color: #fff;
+            border: 2px solid #d6d3d1;
+            border-radius: 4px;
+            width: 1rem;
+            height: 1rem;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .custom-checkbox:checked {
+            background-color: #d97706;
+            border-color: #d97706;
+        }
+        
+        .custom-checkbox:checked::after {
+            content: '✓';
+            color: white;
+            font-size: 0.75rem;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+    </style>
+</head>
+
+<body class="coffee-bg min-h-screen">
+    <!-- Navigation -->
+    <nav class="bg-amber-100 shadow-lg border-b border-amber-200">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo/Brand -->
+                <div class="flex-shrink-0">
+                    <a href="index.html" class="text-2xl font-bold text-amber-800">
+                        Testing-Coffe-Shop 
+                    </a>
+                </div>
+                
+                <!-- Navigation Links -->
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="index.html" class="text-amber-800 hover:bg-amber-200 hover:text-amber-900 px-3 py-2 rounded-md text-sm font-medium transition-all duration-300">
+                            Home
+                        </a>
+                        <a href="under_construction.html" class="text-amber-800 hover:bg-amber-200 hover:text-amber-900 px-3 py-2 rounded-md text-sm font-medium transition-all duration-300">
+                            About
+                        </a>
+                        <a href="under_construction.html" class="text-amber-800 hover:bg-amber-200 hover:text-amber-900 px-3 py-2 rounded-md text-sm font-medium transition-all duration-300">
+                            Shop
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Right side buttons -->
+                <div class="hidden md:block">
+                    <div class="ml-4 flex items-center space-x-3">
+                        <a href="register.html" class="bg-amber-600 hover:bg-amber-700 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-amber-500/25 text-white px-4 py-2 rounded-md text-sm font-medium transition-all duration-300">
+                            Registrierung
+                        </a>
+                        <a href="login.html" class="bg-stone-600 hover:bg-stone-700 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-stone-500/25 text-white px-4 py-2 rounded-md text-sm font-medium transition-all duration-300">
+                            Login
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Mobile menu button -->
+                <div class="md:hidden">
+                    <button type="button" class="mobile-menu-button bg-amber-100 hover:bg-amber-200 hover:scale-105 inline-flex items-center justify-center p-2 rounded-md text-amber-700 hover:text-amber-800 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-amber-500 transition-all duration-300">
+                        <span class="sr-only">Hauptmenü öffnen</span>
+                        <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile menu -->
+        <div class="mobile-menu hidden md:hidden">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-amber-50">
+                <a href="index.html" class="text-amber-800 hover:bg-amber-200 hover:text-amber-900 block px-3 py-2 rounded-md text-base font-medium transition-all duration-300">Home</a>
+                <a href="about.html" class="text-amber-800 hover:bg-amber-200 hover:text-amber-900 block px-3 py-2 rounded-md text-base font-medium transition-all duration-300">About</a>
+                <a href="shop.html" class="text-amber-800 hover:bg-amber-200 hover:text-amber-900 block px-3 py-2 rounded-md text-base font-medium transition-all duration-300">Shop</a>
+                <div class="pt-3 space-y-2">
+                    <a href="register.html" class="bg-amber-600 hover:bg-amber-700 hover:shadow-lg text-white block px-3 py-2 rounded-md text-base font-medium transition-all duration-300">Registrierung</a>
+                    <a href="login.html" class="bg-stone-600 hover:bg-stone-700 hover:shadow-lg text-white block px-3 py-2 rounded-md text-base font-medium transition-all duration-300">Login</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="flex-1">
+        <!-- Register Section -->
+        <section class="py-16 px-4">
+            <div class="max-w-lg mx-auto">
+                <!-- Register Card -->
+                <div class="bg-white rounded-2xl shadow-2xl p-8 animate-fade-in-up">
+                    <!-- Header -->
+                    <div class="text-center mb-8">
+                        <div class="mb-4">
+                            <div class="w-20 h-20 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-4 animate-bounce-in">
+                                <svg class="w-10 h-10 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"></path>
+                                </svg>
+                            </div>
+                        </div>
+                        <h1 class="text-3xl font-bold text-stone-800 mb-2">Willkommen!</h1>
+                        <p class="text-stone-600">Erstellen Sie Ihr Konto bei Testing-CoffeShop</p>
+                    </div>
+
+                    <!-- Register Form -->
+                    <form class="space-y-6" method="POST" action="#" id="registerForm">
+                        <!-- Vorname & Nachname -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="input-group">
+                                <input
+                                    type="text"
+                                    id="firstName"
+                                    name="firstName"
+                                    class="input-field w-full px-4 py-3 border-2 border-stone-200 rounded-lg focus:border-amber-500 focus:outline-none transition-all duration-300 text-stone-800"
+                                    placeholder=" "
+                                    required
+                                >
+                                <label for="firstName" class="input-label">Vorname</label>
+                            </div>
+                            
+                            <div class="input-group">
+                                <input
+                                    type="text"
+                                    id="lastName"
+                                    name="lastName"
+                                    class="input-field w-full px-4 py-3 border-2 border-stone-200 rounded-lg focus:border-amber-500 focus:outline-none transition-all duration-300 text-stone-800"
+                                    placeholder=" "
+                                    required
+                                >
+                                <label for="lastName" class="input-label">Nachname</label>
+                            </div>
+                        </div>
+
+                        <!-- Email Feld -->
+                        <div class="input-group">
+                            <input
+                                type="email"
+                                id="email"
+                                name="email"
+                                class="input-field w-full px-4 py-3 border-2 border-stone-200 rounded-lg focus:border-amber-500 focus:outline-none transition-all duration-300 text-stone-800"
+                                placeholder=" "
+                                required
+                            >
+                            <label for="email" class="input-label">E-Mail Adresse</label>
+                        </div>
+
+                        <!-- Benutzername Feld -->
+                        <div class="input-group has-helper">
+                            <input
+                                type="text"
+                                id="username"
+                                name="username"
+                                class="input-field w-full px-4 py-3 border-2 border-stone-200 rounded-lg focus:border-amber-500 focus:outline-none transition-all duration-300 text-stone-800"
+                                placeholder=" "
+                                required
+                                minlength="3"
+                            >
+                            <label for="username" class="input-label">Benutzername</label>
+                            <div class="mt-1 text-xs text-stone-500">Mindestens 3 Zeichen</div>
+                        </div>
+
+                        <!-- Passwort Feld -->
+                        <div class="input-group has-helper">
+                            <input
+                                type="password"
+                                id="password"
+                                name="password"
+                                class="input-field w-full px-4 py-3 border-2 border-stone-200 rounded-lg focus:border-amber-500 focus:outline-none transition-all duration-300 text-stone-800"
+                                placeholder=" "
+                                required
+                                minlength="6"
+                            >
+                            <label for="password" class="input-label">Passwort</label>
+                            <!-- Passwort-Stärke Indikator -->
+                            <div class="mt-2">
+                                <div class="password-strength bg-gray-200" id="passwordStrength"></div>
+                                <div class="mt-1 text-xs text-stone-500" id="passwordStrengthText">Mindestens 6 Zeichen</div>
+                            </div>
+                        </div>
+
+                        <!-- Passwort bestätigen -->
+                        <div class="input-group">
+                            <input
+                                type="password"
+                                id="confirmPassword"
+                                name="confirmPassword"
+                                class="input-field w-full px-4 py-3 border-2 border-stone-200 rounded-lg focus:border-amber-500 focus:outline-none transition-all duration-300 text-stone-800"
+                                placeholder=" "
+                                required
+                            >
+                            <label for="confirmPassword" class="input-label">Passwort bestätigen</label>
+                        </div>
+
+                        <!-- Geburtsdatum -->
+                        <div class="input-group">
+                            <input
+                                type="date"
+                                id="birthDate"
+                                name="birthDate"
+                                class="input-field w-full px-4 py-3 border-2 border-stone-200 rounded-lg focus:border-amber-500 focus:outline-none transition-all duration-300 text-stone-800"
+                                required
+                            >
+                            <label for="birthDate" class="input-label">Geburtsdatum</label>
+                        </div>
+
+                        <!-- Telefonnummer (optional) -->
+                        <div class="input-group">
+                            <input
+                                type="tel"
+                                id="phone"
+                                name="phone"
+                                class="input-field w-full px-4 py-3 border-2 border-stone-200 rounded-lg focus:border-amber-500 focus:outline-none transition-all duration-300 text-stone-800"
+                                placeholder=" "
+                            >
+                            <label for="phone" class="input-label">Telefonnummer (optional)</label>
+                        </div>
+
+                        <!-- Newsletter & AGB -->
+                        <div class="space-y-3">
+                            <label class="flex items-center text-sm">
+                                <input type="checkbox" name="newsletter" class="custom-checkbox mr-3">
+                                <span class="text-stone-600">Ich möchte den Newsletter erhalten und über neue Kaffeespezialitäten informiert werden</span>
+                            </label>
+                            
+                            <label class="flex items-center text-sm">
+                                <input type="checkbox" name="terms" class="custom-checkbox mr-3" required>
+                                <span class="text-stone-600">
+                                    Ich akzeptiere die 
+                                    <a href="agb.html" class="text-amber-600 hover:text-amber-700 underline" target="_blank">
+                                        Allgemeinen Geschäftsbedingungen
+                                    </a>
+                                    und die 
+                                    <a href="datenschutz.html" class="text-amber-600 hover:text-amber-700 underline" target="_blank">
+                                        Datenschutzerklärung
+                                    </a>
+                                </span>
+                            </label>
+                        </div>
+
+                        <!-- Register Button -->
+                        <button
+                            type="submit"
+                            class="w-full bg-amber-600 hover:bg-amber-700 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-amber-500/25 focus:outline-none focus:ring-4 focus:ring-amber-500/50"
+                        >
+                            <span class="flex items-center justify-center">
+                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"></path>
+                                </svg>
+                                Konto erstellen
+                            </span>
+                        </button>
+
+                        <!-- Divider -->
+                        <div class="relative">
+                            <div class="absolute inset-0 flex items-center">
+                                <div class="w-full border-t border-stone-200"></div>
+                            </div>
+                            <div class="relative flex justify-center text-sm">
+                                <span class="px-2 bg-white text-stone-500">oder</span>
+                            </div>
+                        </div>
+
+                        <!-- Login Link -->
+                        <div class="text-center">
+                            <p class="text-stone-600">
+                                Bereits ein Konto?
+                                <a href="login.html" class="text-amber-600 hover:text-amber-700 font-semibold hover:underline transition-colors duration-300">
+                                    Jetzt anmelden
+                                </a>
+                            </p>
+                        </div>
+                    </form>
+
+                    <!-- Register Result (wird von JavaScript gefüllt) -->
+                    <div id="registerResult" class="mt-6 hidden"></div>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-stone-800 text-white">
+        <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Links Section -->
+                 <div class="text-center">
+                    <h3 class="text-lg font-semibold mb-4">Rechtliches</h3>
+                    <ul class="space-y-2">
+                        <li>
+                            <a href="under_construction.html" class="text-white hover:text-white hover:underline transition-all duration-300">
+                                Allgemeine Geschäftsbedingungen
+                            </a>
+                        </li>
+                        <li>
+                            <a href="under_construction.html" class="text-white hover:text-white hover:underline transition-all duration-300">
+                                Datenschutzerklärung
+                            </a>
+                        </li>
+                        <li>
+                            <a href="under_construction.html" class="text-white hover:text-white hover:underline transition-all duration-300">
+                                Impressum
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Contact Section -->
+                <div class="text-center">
+                    <h3 class="text-lg font-semibold mb-4">Kontakt</h3>
+                    <div class="space-y-2 text-amber-200 text-white">
+                        <p>
+                            <strong>Adresse:</strong><br>
+                            Musterstraße 123<br>
+                            12345 Musterstadt<br>
+                            Deutschland
+                        </p>
+                        <p>
+                            <strong>Telefon:</strong><br>
+                            +49 (0) 123 456789
+                        </p>
+                        <p>
+                            <strong>E-Mail:</strong><br>
+                            <a href="mailto:info@meinsite.de" class="text-white hover:underline transition-all duration-300">
+                                info@meinsite.de
+                            </a>
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Social Media / Additional Info -->
+                <div class="text-center">
+                    <h3 class="text-lg font-semibold mb-4">Öffnungszeiten</h3>
+                    <div class="space-y-2 text-gray-300">
+                        <p>
+                            <strong>Montag - Freitag:</strong><br>
+                            09:00 - 18:00 Uhr
+                        </p>
+                        <p>
+                            <strong>Samstag:</strong><br>
+                            10:00 - 16:00 Uhr
+                        </p>
+                        <p>
+                            <strong>Sonntag:</strong><br>
+                            Geschlossen
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Bottom Section -->
+            <div class="mt-8 pt-8 border-t border-gray-700 text-center">
+                <p class="text-gray-400">
+                    © 2025 Testing-Coffe-Shop. Developed by Rene Erdmann
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript für Mobile Menu und Form-Validierung -->
+    <script>
+        // Mobile Menu Toggle
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuButton = document.querySelector('.mobile-menu-button');
+            const mobileMenu = document.querySelector('.mobile-menu');
+            
+            if (mobileMenuButton && mobileMenu) {
+                mobileMenuButton.addEventListener('click', function() {
+                    mobileMenu.classList.toggle('hidden');
+                });
+            }
+
+            // Schöner Fokus-Effekt für Inputs
+            const inputs = document.querySelectorAll('.input-field');
+            inputs.forEach(input => {
+                input.addEventListener('focus', function() {
+                    this.parentElement.classList.add('input-focused');
+                });
+                
+                input.addEventListener('blur', function() {
+                    this.parentElement.classList.remove('input-focused');
+                });
+            });
+
+            // Passwort-Stärke Checker
+            const passwordInput = document.getElementById('password');
+            const strengthBar = document.getElementById('passwordStrength');
+            const strengthText = document.getElementById('passwordStrengthText');
+            
+            if (passwordInput) {
+                passwordInput.addEventListener('input', function() {
+                    const password = this.value;
+                    let strength = 0;
+                    let strengthLabel = '';
+                    let strengthColor = '';
+                    
+                    if (password.length >= 6) strength++;
+                    if (password.match(/[a-z]/)) strength++;
+                    if (password.match(/[A-Z]/)) strength++;
+                    if (password.match(/[0-9]/)) strength++;
+                    if (password.match(/[^a-zA-Z0-9]/)) strength++;
+                    
+                    switch(strength) {
+                        case 0:
+                        case 1:
+                            strengthLabel = 'Sehr schwach';
+                            strengthColor = 'bg-red-500';
+                            break;
+                        case 2:
+                            strengthLabel = 'Schwach';
+                            strengthColor = 'bg-orange-500';
+                            break;
+                        case 3:
+                            strengthLabel = 'Mittel';
+                            strengthColor = 'bg-yellow-500';
+                            break;
+                        case 4:
+                            strengthLabel = 'Stark';
+                            strengthColor = 'bg-green-500';
+                            break;
+                        case 5:
+                            strengthLabel = 'Sehr stark';
+                            strengthColor = 'bg-green-600';
+                            break;
+                    }
+                    
+                    strengthBar.className = `password-strength ${strengthColor}`;
+                    strengthBar.style.width = (strength * 20) + '%';
+                    strengthText.textContent = strengthLabel;
+                });
+            }
+
+            // Register Form Handler für statische Website
+            const registerForm = document.getElementById('registerForm');
+            const registerResult = document.getElementById('registerResult');
+            
+            if (registerForm) {
+                registerForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    // Form-Daten sammeln
+                    const formData = new FormData(this);
+                    const firstName = formData.get('firstName');
+                    const lastName = formData.get('lastName');
+                    const email = formData.get('email');
+                    const username = formData.get('username');
+                    const password = formData.get('password');
+                    const confirmPassword = formData.get('confirmPassword');
+                    const terms = formData.get('terms');
+                    
+                    // Validierung
+                    let errors = [];
+                    
+                    if (!firstName || !lastName || !email || !username || !password || !confirmPassword) {
+                        errors.push('Bitte füllen Sie alle Pflichtfelder aus.');
+                    }
+                    
+                    if (password !== confirmPassword) {
+                        errors.push('Die Passwörter stimmen nicht überein.');
+                    }
+                    
+                    if (password && password.length < 6) {
+                        errors.push('Das Passwort muss mindestens 6 Zeichen lang sein.');
+                    }
+                    
+                    if (!terms) {
+                        errors.push('Sie müssen die AGB akzeptieren.');
+                    }
+                    
+                    // Email-Validierung
+                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    if (email && !emailRegex.test(email)) {
+                        errors.push('Bitte geben Sie eine gültige E-Mail-Adresse ein.');
+                    }
+                    
+                    if (errors.length > 0) {
+                        // Zeige Fehler-Nachrichten
+                        registerResult.innerHTML = `
+                            <div class="p-4 bg-red-100 border border-red-400 text-red-700 rounded-lg">
+                                <h4 class="font-semibold mb-2">❌ Registrierung fehlgeschlagen:</h4>
+                                <ul class="list-disc list-inside text-sm space-y-1">
+                                    ${errors.map(error => `<li>${error}</li>`).join('')}
+                                </ul>
+                            </div>
+                        `;
+                    } else {
+                        // Zeige Erfolgs-Nachricht
+                        registerResult.innerHTML = `
+                            <div class="p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg">
+                                <h4 class="font-semibold mb-2">✅ Registrierung erfolgreich!</h4>
+                                <p class="text-sm">Willkommen bei Testing-CoffeShop, <strong>${escapeHtml(firstName)} ${escapeHtml(lastName)}</strong>!</p>
+                                <p class="text-sm mt-2">Benutzername: <strong>${escapeHtml(username)}</strong></p>
+                                <p class="text-sm mt-2">E-Mail: <strong>${escapeHtml(email)}</strong></p>
+                                <p class="text-xs mt-2 text-green-600">In einer echten Anwendung würden Sie jetzt eine Bestätigungs-E-Mail erhalten.</p>
+                                <div class="mt-3">
+                                    <a href="login.html" class="inline-block bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded text-sm transition-colors">
+                                        Jetzt anmelden
+                                    </a>
+                                </div>
+                            </div>
+                        `;
+                        
+                        // Form zurücksetzen
+                        registerForm.reset();
+                    }
+                    
+                    registerResult.classList.remove('hidden');
+                    registerResult.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                });
+            }
+        });
+
+        // HTML escaping function für Sicherheit
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+    </script>
+</body>
+</html>
