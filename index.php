@@ -148,8 +148,8 @@
                         <a href="shop.php" class="bg-amber-600 hover:bg-amber-700 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-amber-500/25 text-white px-8 py-3 rounded-lg text-lg font-medium transition-all duration-300">
                             Zum Shop
                         </a>
-                        <a href="about.php" class="bg-gray-100 hover:bg-gray-200 hover:-translate-y-0.5 hover:shadow-lg text-gray-900 px-8 py-3 rounded-lg text-lg font-medium transition-all duration-300">
-                            Mehr erfahren
+                        <a href="./dist/login.html" class="bg-gray-100 hover:bg-gray-200 hover:-translate-y-0.5 hover:shadow-lg text-gray-900 px-8 py-3 rounded-lg text-lg font-medium transition-all duration-300">
+                            login
                         </a>
                     </div>
                 </div>
