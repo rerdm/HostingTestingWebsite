@@ -11,11 +11,7 @@
             <!-- Navigation Links -->
             <div class="hidden md:block">
                 <div class="ml-10 flex items-baseline space-x-4">
-                    <?php
-                        // Check if index.php exists, otherwise fallback to index.html
-                        $homePage = file_exists('index.php') ? 'index.php' : (file_exists('index.html') ? 'index.html' : '#');
-                    ?>
-                    <a href="<?php echo $homePage; ?>" class="text-amber-800 hover:bg-amber-200 hover:text-amber-900 px-3 py-2 rounded-md text-sm font-medium transition-all duration-300">
+                    <a href="index.html" class="text-amber-800 hover:bg-amber-200 hover:text-amber-900 px-3 py-2 rounded-md text-sm font-medium transition-all duration-300">
                         Home
                     </a>
                     <a href="about.php" class="text-amber-800 hover:bg-amber-200 hover:text-amber-900 px-3 py-2 rounded-md text-sm font-medium transition-all duration-300">
