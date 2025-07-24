@@ -1,174 +1,182 @@
-# ☕ HostingTestingWebsite - Coffee Shop Website
+# ☕ Testing-Coffee-Shop - Static Website Hosting on GitHub Pages
 
-A modern coffee shop website project built with Tailwind CSS and a warm brown theme.
+A modern coffee shop website project designed for static hosting on GitHub Pages. This project demonstrates how to build and deploy a responsive web application using Tailwind CSS with automated deployment pipelines.
 
-## 📋 Table of Contents
+# Table of Contents
 
-- [✨ Features](#-features)
-- [🚀 Quick Deployment to GitHub Pages](#-quick-deployment-to-github-pages)
-  - [Step 1: Create GitHub Repository](#step-1-create-github-repository)
-  - [Step 2: Upload Code to GitHub](#step-2-upload-code-to-github)
-  - [Step 3: Enable GitHub Pages](#step-3-enable-github-pages)
-  - [Step 4: Access Your Website](#step-4-access-your-website)
+- [📖 Project Overview](#-project-overview)
+- [🚀 Quick Start Guide](#-quick-start-guide)
+  - [Git Clone & Setup](#git-clone--setup)
+  - [Local Development with Five Server](#local-development-with-five-server)
+- [🌐 GitHub Pages Deployment](#-github-pages-deployment)
+  - [GitHub Pages Capabilities & Limitations](#github-pages-capabilities--limitations)
+  - [Manual Deployment Steps](#manual-deployment-steps)
+- [⚙️ Pipeline Integration](#️-pipeline-integration)
+  - [GitHub Actions Workflow](#github-actions-workflow)
+  - [Automated PHP to HTML Conversion](#automated-php-to-html-conversion)
+  - [Component Integration for Static Deployment](#component-integration-for-static-deployment)
 - [🛠️ Technical Details](#️-technical-details)
-- [🚀 Development Setup](#-development-setup)
 - [📁 Project Structure](#-project-structure)
 - [🎨 Tailwind CSS Integration](#-tailwind-css-integration)
 - [📱 Responsive Design](#-responsive-design)
 - [🔧 Troubleshooting](#-troubleshooting)
 - [📄 License](#-license)
 
-## ✨ Features
+## 1 Project Overview
 
-- **Pure Tailwind CSS**: No external CSS files - everything built with Tailwind utility classes
-- **Responsive Design**: Optimized for desktop, tablet, and mobile devices
-- **Interactive Image Slider**: Features real coffee images with auto-play, navigation, and touch support
-- **Coffee Theme**: Warm brown color palette using Amber/Stone colors
-- **Mobile Navigation**: Hamburger menu for mobile devices
-- **GitHub Pages Ready**: Automatic deployment with GitHub Actions
-- **Smooth Animations**: Hover effects and seamless transitions
-- **PHP-based Structure**: Modular includes for header and footer
-- **SEO Optimized**: Meta tags and semantic HTML structure
+This project is a **static coffee shop website** specifically designed for hosting on **GitHub Pages**. This Wbsite ca nbe uses for webtesting purposes. It features:
 
-## 🚀 Quick Deployment to GitHub Pages
+- ✅ **Static HTML/CSS/JavaScript** - No server-side processing required
+- ✅ **Responsive Design** - Mobile-first approach with Tailwind CSS
+- ✅ **Automated Deployment** - GitHub Actions pipeline for seamless deployment
+- ❌ This website does **not** feature any **database interactions**. All content is static and does not rely on backend data storage or dynamic database queries.
 
-### Step 1: Create GitHub Repository
-1. Go to [GitHub.com](https://github.com)
-2. Click "New repository"
-3. Repository Name: `HostingTestingWebsite`
-4. Set repository to **"Public"** (important for free GitHub Pages!)
-5. Click "Create repository"
+## 2 Local testing the Website with FiveServer
 
-### Step 2: Upload Code to GitHub
-Open Terminal/PowerShell in your project folder and execute:
+**Five Server Configuration** for optimal local testing (in this configurration we dont use PHP because is not workung on Github Pages) :
 
-```powershell
-git init
-git add .
-git commit -m "Initial commit - Coffee Shop Website"
-git branch -M main
-git remote add origin https://github.com/[YOUR-USERNAME]/HostingTestingWebsite.git
-git push -u origin main
+### 2.1 Install Five Server Extension 
+Install the FiveServer extension.
+
+### 2.2 Configure Five Server
+
+Create a `fiveserver.config.js`in the root directory
+
+   ```javascript
+   module.exports = {
+     open: 'index.html',
+   };
+   ```
+
+### 2.3 Start Local Development
+   - Right-click on `index.php`
+   - Select "Open with Five Server" in th eupper navigation baar
+   - Website opens at `http://localhost:5500`
+
+
+## 3 GitHub Pages Deployment
+
+### 3.1 GitHub Pages Capabilities & Limitations
+
+Github Pages has some limitation in Hosting resoruces. See below.
+
+#### 3.1.1 What GitHub Pages CAN do
+- Host static HTML, CSS, JavaScript files
+- Custom domains and HTTPS
+- GitHub Actions for automated deployment
+- CDN distribution worldwide
+
+#### 3.1.2 What GitHub Pages CANNOT do
+- Server-side languages (PHP, Python, Node.js)
+- Database connections
+- Server-side form processing
+- Dynamic content generation
+- File uploads to server
+
+### 4.2 Pipeline Integration (Workflow)
+
+```yaml
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Convert PHP to HTML and copy assets
+        run: |
+          # Create output directory
+          mkdir -p dist
+          
+          # Copy images directory
+          cp -r images dist/
+          
+          cp index.html dist/index.html
+          
+          cp login.html dist/login.html
+
+          cp agb.html dist/agb.html
+
+          cp under_construction.html dist/under_construction.html
+
+      - name: Fix remaining PHP tags and links
+        run: |
+          # Remove any remaining PHP opening/closing tags
+          find dist -name "*.html" -type f -exec sed -i 's/<?php[^>]*>//g' {} \;
+          find dist -name "*.html" -type f -exec sed -i 's/?>//g' {} \;
+          
+          # Ensure all links point to .html files
+          find dist -name "*.html" -type f -exec sed -i 's/href="\([^"]*\)\.php"/href="\1.html"/g' {} \;
+          find dist -name "*.html" -type f -exec sed -i 's/action="\([^"]*\)\.php"/action="\1.html"/g' {} \;
+          
+          # Debug: Show what files were created
+          echo "Created files:"
+          ls -la dist/
+          echo "Sample content from index.html:"
+          head -10 dist/index.html || true
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: './dist'
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
 ```
 
-*Replace `[YOUR-USERNAME]` with your GitHub username!*
 
-### Step 3: Enable GitHub Pages
-1. Go to your repository on GitHub
-2. Click **"Settings"** (top right)
-3. Scroll to **"Pages"** (left menu)
-4. Under "Source" select **"GitHub Actions"**
-5. Save - the deployment process starts automatically!
+### 4.3 Enable GitHub Pages
+   - Go to repository **Settings**
+   - Navigate to **Pages** section
+   - Source: **Deploy from a branch**
+   - Branch: **master** / **main**
+   - Folder: **/ (root)**
+   - Click **Save**
 
-### Step 4: Access Your Website
-After 2-3 minutes, your website will be live at:
-**`https://[YOUR-USERNAME].github.io/HostingTestingWebsite`**
+## 5 Manual Deployment Steps (on push)
 
-## ️ Technical Details
+At the moment the pipeline will be striggered onyl on `push`.
+Other triggers need to be implementes (eg. `workflow_dispatch`)
 
-### Technologies Used:
-- **Tailwind CSS** (via CDN)
-- **PHP 8.2** for server-side logic
-- **Vanilla JavaScript** for interactivity
-- **SVG Icons** for graphics
-- **GitHub Actions** for automated deployment
+## 5.2 Upload Files via Git to trigger the Pipeleine - Deployment
+   ```bash
+   git add .
+   git commit -m "<commit message>"
+   git push origin master
+   ```
 
-### Key Components:
-- Responsive image slider with coffee images
-- Mobile-first navigation system
-- Modular PHP includes architecture
-- Automated PHP-to-HTML conversion for static hosting
+## 5.3 Access Your Website:
+   ```
+   URL: https://<username>.github.io/<repository-name>/
+   ```
 
-## 🚀 Development Setup
 
-### Option 1: Five Server (Recommended)
-1. Install Five Server VS Code Extension
-2. Open `index.php` in VS Code
-3. Right-click and select "Open with Five Server"
-4. Website opens at `http://localhost:5500`
-
-### Option 2: PHP Built-in Server
-1. Install PHP (or XAMPP with PHP)
-2. Open terminal in project directory
-3. Run: `php -S localhost:8000`
-4. Open `http://localhost:8000` for PHP version
-
-### Option 3: XAMPP
-1. Copy project to `htdocs` folder
-2. Start XAMPP Apache
-3. Visit `http://localhost/HostingTestingWebsite`
-
-## 📁 Project Structure
-
-```
-HostingTestingWebsite/
-├── index.php                    # Main page (completely redesigned)
-├── agb.php                      # Terms of Service page
-├── fiveserver.config.js         # Live Server configuration
-├── README.md                    # Documentation (updated)
-├── .github/
-│   └── workflows/
-│       └── deploy.yml           # GitHub Pages deployment
-├── images/                      # Images and assets
-│   ├── kaffe_1.jpeg            # Coffee image 1
-│   ├── kaffe_2.png             # Coffee image 2
-│   └── kaffe_3.png             # Coffee image 3
-└── includes/                    # PHP includes
-    ├── navbar.php              # Navigation (redesigned)
-    └── footer.php              # Footer (improved)
-```
-
-## 🎨 Tailwind CSS Integration
-
-### Custom Configuration:
-```javascript
-tailwind.config = {
-    theme: {
-        extend: {
-            animation: {
-                'fade-in-up': 'fadeInUp 0.8s ease-out',
-                'spin': 'spin 1s ease-in-out infinite',
-            },
-            keyframes: {
-                fadeInUp: {
-                    '0%': { opacity: '0', transform: 'translateY(30px)' },
-                    '100%': { opacity: '1', transform: 'translateY(0)' },
-                }
-            }
-        }
-    }
-}
-```
-
-### Color Scheme:
-- **Primary**: Amber colors (amber-50 to amber-900)
-- **Secondary**: Stone colors (stone-100 to stone-800)
-- **Accents**: White and warm grays
-- **Theme**: Coffee-inspired warm browns
-
-## 📱 Responsive Design
-
-- **Mobile First**: Designed for mobile devices first
-- **Breakpoints**: Tailwind's default responsive breakpoints
-- **Touch Support**: Swipe gestures for image slider
-- **Flexible Grid**: CSS Grid and Flexbox layouts
-- **Optimized Images**: Lazy loading and proper sizing
-
-## 🔧 Troubleshooting
-
-### GitHub Pages Issues:
-1. **"Not Found" Error**: Ensure repository is public and Pages is enabled
-2. **Workflow Fails**: Check that "GitHub Actions" is selected as source
-3. **Images Not Loading**: Verify images are in the `images/` directory
-4. **PHP Errors**: The deployment converts PHP to HTML automatically
-
-### Local Development:
-1. **PHP Not Found**: Install PHP or use XAMPP
-2. **Port Already in Use**: Try different port: `php -S localhost:8001`
-3. **Images Not Showing**: Check file paths and case sensitivity
-
-## 📄 License
-
-This project is open source and available under the [MIT License](LICENSE).
 
 
