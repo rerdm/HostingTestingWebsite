@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Testing-CoffeShop | Home </title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Tailwind CSS Custom Configuration -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    animation: {
+                        'fade-in-up': 'fadeInUp 0.8s ease-out',
+                        'spin': 'spin 1s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(30px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        /* Nur noch notwendige CSS für Slider-Funktionalität */
+        .slider {
+            transition: transform 0.5s ease-in-out;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* Optimierungen für Slider-Bilder */
+        .slide img {
+            transition: transform 0.3s ease-in-out;
+        }
+        
+        .slide:hover img {
+            transform: scale(1.02);
+        }
+        
+        /* Bessere Performance für Bilder */
+        .slide img {
+            image-rendering: -webkit-optimize-contrast;
+            image-rendering: crisp-edges;
+        }
+    </style>
+    
+    <!-- Meta Tags für SEO -->
+    <meta name="description" content="Willkommen bei MeinSite - Ihre erste Anlaufstelle für qualitative Produkte und Services.">
+    <meta name="keywords" content="Shop, Produkte, Services, Online">
+    <meta name="author" content="MeinSite">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+</head>
+<body class="bg-amber-50">
+    <!-- Navigation -->
+    <?php include 'includes/navbar.php'; ?>
+    
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section with Image Slider -->
+        <section class="relative mx-4 md:mx-8 lg:mx-12 xl:mx-72 mt-10">
+            <div id="imageSlider" class="relative overflow-hidden rounded-lg shadow-xl">
+                <div class="slider flex">
+                    <!-- Slide 1 - Kaffee Bild 1 -->
+                    <div class="slide min-w-full h-64 md:h-80 lg:h-96 relative">
+                        <img src="images/kaffe_1.jpeg" alt="Testing-CoffeShop | Home " 
+                             class="w-full h-full object-cover object-center"
+                             loading="lazy">
+                        <div class="absolute inset-0 bg-gradient-to-br from-black/60 to-black/30 flex items-center justify-center text-center text-white">
+                            <div class="px-4 max-w-4xl">
+                                <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-3 md:mb-4 drop-shadow-2xl">Willkommen bei MeinSite</h2>
+                                <p class="text-lg md:text-xl lg:text-2xl drop-shadow-lg opacity-90">Entdecken Sie unsere vielfältigen Produkte und Services</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Slide 2 - Kaffee Bild 2 -->
+                    <div class="slide min-w-full h-64 md:h-80 lg:h-96 relative">
+                        <img src="images/kaffe_2.png" alt="Qualitätskaffee - Beste Produkte" 
+                             class="w-full h-full object-cover object-center"
+                             loading="lazy">
+                        <div class="absolute inset-0 bg-gradient-to-br from-black/60 to-black/30 flex items-center justify-center text-center text-white">
+                            <div class="px-4 max-w-4xl">
+                                <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-3 md:mb-4 drop-shadow-2xl">Fokus auf Qualität</h2>
+                                <p class="text-lg md:text-xl lg:text-2xl drop-shadow-lg opacity-90">Wir bieten nur die besten Produkte für unsere Kunden</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Slide 2 - Kaffee Bild 2 -->
+                    <div class="slide min-w-full h-64 md:h-80 lg:h-96 relative">
+                        <img src="images/kaffe_3.png" alt="Qualitätskaffee - Beste Produkte" 
+                             class="w-full h-full object-cover object-center"
+                             loading="lazy">
+                        <div class="absolute inset-0 bg-gradient-to-br from-black/60 to-black/30 flex items-center justify-center text-center text-white">
+                            <div class="px-4 max-w-4xl">
+                                <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-3 md:mb-4 drop-shadow-2xl">Kundenservice</h2>
+                                <p class="text-lg md:text-xl lg:text-2xl drop-shadow-lg opacity-90">Unser Team steht Ihnen jederzeit zur Verfügung</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Navigation Arrows -->
+                <button class="slider-nav prev absolute top-1/2 left-4 lg:left-6 -translate-y-1/2 bg-white/80 hover:bg-white hover:scale-110 border-0 rounded-full w-12 h-12 lg:w-14 lg:h-14 flex items-center justify-center cursor-pointer transition-all duration-300 z-10">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                    </svg>
+                </button>
+                <button class="slider-nav next absolute top-1/2 right-4 lg:right-6 -translate-y-1/2 bg-white/80 hover:bg-white hover:scale-110 border-0 rounded-full w-12 h-12 lg:w-14 lg:h-14 flex items-center justify-center cursor-pointer transition-all duration-300 z-10">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                    </svg>
+                </button>
+                
+                <!-- Slide Indicators -->
+                <div class="slider-indicators absolute bottom-5 left-1/2 -translate-x-1/2 flex gap-3">
+                    <div class="indicator w-3 h-3 rounded-full bg-white/50 cursor-pointer transition-all duration-300 active:bg-white active:scale-125"></div>
+                    <div class="indicator w-3 h-3 rounded-full bg-white/50 cursor-pointer transition-all duration-300 hover:bg-white/75"></div>
+                    <div class="indicator w-3 h-3 rounded-full bg-white/50 cursor-pointer transition-all duration-300 hover:bg-white/75"></div>
+                    <div class="indicator w-3 h-3 rounded-full bg-white/50 cursor-pointer transition-all duration-300 hover:bg-white/75"></div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Welcome Section -->
+        <section class="py-16">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center animate-fade-in-up">
+                    <h1 class="text-4xl font-bold text-amber-900 mb-6">
+                        Herzlich Willkommen bei MeinSite
+                    </h1>
+                    <p class="text-xl text-amber-700 mb-8 max-w-3xl mx-auto">
+                        Wir freuen uns, Sie auf unserer Website begrüßen zu dürfen. Entdecken Sie unser 
+                        umfangreiches Sortiment und erleben Sie erstklassigen Service.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                        <a href="shop.php" class="bg-amber-600 hover:bg-amber-700 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-amber-500/25 text-white px-8 py-3 rounded-lg text-lg font-medium transition-all duration-300">
+                            Zum Shop
+                        </a>
+                        <a href="about.php" class="bg-gray-100 hover:bg-gray-200 hover:-translate-y-0.5 hover:shadow-lg text-gray-900 px-8 py-3 rounded-lg text-lg font-medium transition-all duration-300">
+                            Mehr erfahren
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Features Section -->
+        <section class="py-16 bg-stone-100">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold text-amber-900 mb-4">
+                        Warum MeinSite wählen?
+                    </h2>
+                    <p class="text-lg text-amber-700">
+                        Hier sind einige Gründe, warum unsere Kunden uns vertrauen
+                    </p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Feature 1 -->
+                    <div class="text-center p-6 rounded-lg hover:-translate-y-1 hover:shadow-xl hover:shadow-amber-200/50 transition-all duration-300">
+                        <div class="bg-amber-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <svg class="w-8 h-8 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-semibold text-amber-900 mb-2">Schnell & Zuverlässig</h3>
+                        <p class="text-amber-700">
+                            Unsere Produkte werden schnell und zuverlässig zu Ihnen geliefert.
+                        </p>
+                    </div>
+                    
+                    <!-- Feature 2 -->
+                    <div class="text-center p-6 rounded-lg hover:-translate-y-1 hover:shadow-xl hover:shadow-amber-200/50 transition-all duration-300">
+                        <div class="bg-stone-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <svg class="w-8 h-8 text-stone-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-semibold text-amber-900 mb-2">Höchste Qualität</h3>
+                        <p class="text-amber-700">
+                            Wir garantieren Ihnen Produkte von höchster Qualität und Langlebigkeit.
+                        </p>
+                    </div>
+                    
+                    <!-- Feature 3 -->
+                    <div class="text-center p-6 rounded-lg hover:-translate-y-1 hover:shadow-xl hover:shadow-amber-200/50 transition-all duration-300">
+                        <div class="bg-amber-200 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <svg class="w-8 h-8 text-amber-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-semibold text-amber-900 mb-2">24/7 Support</h3>
+                        <p class="text-amber-700">
+                            Unser Kundenservice steht Ihnen rund um die Uhr zur Verfügung.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <!-- Footer -->
+    <?php include 'includes/footer.php'; ?>
+    
+    <!-- Integriertes JavaScript für Slider und Mobile Menu -->
+    <script>
+        // Mobile menu toggle
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuButton = document.querySelector('.mobile-menu-button');
+            const mobileMenu = document.querySelector('.mobile-menu');
+            
+            if (mobileMenuButton && mobileMenu) {
+                mobileMenuButton.addEventListener('click', function() {
+                    mobileMenu.classList.toggle('hidden');
+                });
+            }
+        });
+
+        // Image Slider functionality
+        class ImageSlider {
+            constructor(containerId) {
+                this.container = document.getElementById(containerId);
+                if (!this.container) return;
+                
+                this.slider = this.container.querySelector('.slider');
+                this.slides = this.container.querySelectorAll('.slide');
+                this.prevBtn = this.container.querySelector('.prev');
+                this.nextBtn = this.container.querySelector('.next');
+                this.indicators = this.container.querySelectorAll('.indicator');
+                
+                this.currentIndex = 0;
+                this.totalSlides = this.slides.length;
+                
+                this.init();
+            }
+            
+            init() {
+                if (this.totalSlides === 0) return;
+                
+                // Set up event listeners
+                if (this.prevBtn) {
+                    this.prevBtn.addEventListener('click', () => this.prevSlide());
+                }
+                
+                if (this.nextBtn) {
+                    this.nextBtn.addEventListener('click', () => this.nextSlide());
+                }
+                
+                // Set up indicator clicks
+                this.indicators.forEach((indicator, index) => {
+                    indicator.addEventListener('click', () => this.goToSlide(index));
+                });
+                
+                // Auto-play slider
+                this.startAutoPlay();
+                
+                // Pause auto-play on hover
+                this.container.addEventListener('mouseenter', () => this.stopAutoPlay());
+                this.container.addEventListener('mouseleave', () => this.startAutoPlay());
+                
+                // Touch/swipe support for mobile
+                this.setupTouchEvents();
+                
+                // Update initial state
+                this.updateSlider();
+            }
+            
+            nextSlide() {
+                this.currentIndex = (this.currentIndex + 1) % this.totalSlides;
+                this.updateSlider();
+            }
+            
+            prevSlide() {
+                this.currentIndex = (this.currentIndex - 1 + this.totalSlides) % this.totalSlides;
+                this.updateSlider();
+            }
+            
+            goToSlide(index) {
+                this.currentIndex = index;
+                this.updateSlider();
+            }
+            
+            updateSlider() {
+                // Move slider
+                const translateX = -this.currentIndex * 100;
+                this.slider.style.transform = `translateX(${translateX}%)`;
+                
+                // Update indicators
+                this.indicators.forEach((indicator, index) => {
+                    if (index === this.currentIndex) {
+                        indicator.classList.add('!bg-white', '!scale-125');
+                        indicator.classList.remove('bg-white/50');
+                    } else {
+                        indicator.classList.remove('!bg-white', '!scale-125');
+                        indicator.classList.add('bg-white/50');
+                    }
+                });
+            }
+            
+            startAutoPlay() {
+                this.stopAutoPlay(); // Clear any existing interval
+                this.autoPlayInterval = setInterval(() => {
+                    this.nextSlide();
+                }, 5000); // Change slide every 5 seconds
+            }
+            
+            stopAutoPlay() {
+                if (this.autoPlayInterval) {
+                    clearInterval(this.autoPlayInterval);
+                    this.autoPlayInterval = null;
+                }
+            }
+            
+            setupTouchEvents() {
+                let startX = 0;
+                let endX = 0;
+                
+                this.container.addEventListener('touchstart', (e) => {
+                    startX = e.touches[0].clientX;
+                }, { passive: true });
+                
+                this.container.addEventListener('touchend', (e) => {
+                    endX = e.changedTouches[0].clientX;
+                    this.handleSwipe();
+                }, { passive: true });
+                
+                const handleSwipe = () => {
+                    const difference = startX - endX;
+                    const threshold = 50; // Minimum swipe distance
+                    
+                    if (Math.abs(difference) > threshold) {
+                        if (difference > 0) {
+                            this.nextSlide(); // Swipe left
+                        } else {
+                            this.prevSlide(); // Swipe right
+                        }
+                    }
+                };
+                
+                this.handleSwipe = handleSwipe;
+            }
+        }
+
+        // Initialize slider when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            new ImageSlider('imageSlider');
+        });
+
+        // Smooth scrolling for anchor links
+        document.addEventListener('DOMContentLoaded', function() {
+            const links = document.querySelectorAll('a[href^="#"]');
+            
+            links.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    const targetSection = document.querySelector(targetId);
+                    
+                    if (targetSection) {
+                        targetSection.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+        });
+
+        // Add loading states to buttons
+        document.addEventListener('DOMContentLoaded', function() {
+            const buttons = document.querySelectorAll('button[type="submit"], .btn-submit');
+            
+            buttons.forEach(button => {
+                button.addEventListener('click', function() {
+                    if (this.form && this.form.checkValidity()) {
+                        this.innerHTML = '<span class="inline-block w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin mr-2"></span> Wird geladen...';
+                        this.disabled = true;
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
