@@ -27,34 +27,13 @@ jobs:
           mkdir -p dist
           
           # Copy images directory
-          if [ -d "images" ]; then
-            cp -r images dist/
-          fi
+          cp -r images dist/
           
-          # Copy PHP files as HTML (since they now contain static content)
-          if [ -f "index.php" ]; then
-            cp index.php dist/index.html
-          fi
+          cp index.html dist/index.html
           
-          if [ -f "about.php" ]; then
-            cp about.php dist/about.html
-          fi
-          
-          if [ -f "shop.php" ]; then
-            cp shop.php dist/shop.html
-          fi
-          
-          if [ -f "register.php" ]; then
-            cp register.php dist/register.html
-          fi
-          
-          if [ -f "login.php" ]; then
-            cp login.php dist/login.html
-          fi
-          
-          if [ -f "agb.php" ]; then
-            cp agb.php dist/agb.html
-          fi
+          cp login.html dist/login.html
+
+          cp agb.html dist/agb.html
 
       - name: Fix remaining PHP tags and links
         run: |
