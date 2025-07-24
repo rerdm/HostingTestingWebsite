@@ -33,7 +33,7 @@ jobs:
           
           cp login.html dist/login.html
 
-          cp agb.html dist/agb.html
+          cp register.html dist/register.html
 
           cp under_construction.html dist/under_construction.html
 
