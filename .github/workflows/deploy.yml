@@ -57,11 +57,34 @@ jobs:
           if [ -f "agb.php" ]; then
             php -f agb.php > dist/agb.html
           fi
+
+      - name: Copy includes directory
+        run: |
+          # Copy includes directory to maintain structure
+          if [ -d "includes" ]; then
+            cp -r includes dist/
+          fi
       - name: Fix HTML links
         run: |
           # Replace .php links with .html in all HTML files
-          find dist -name "*.html" -type f -exec sed -i 's/href="[^"]*\.php"/href="&"/g; s/\.php"/.html"/g' {} \;
-          find dist -name "*.html" -type f -exec sed -i 's/action="[^"]*\.php"/action="&"/g; s/\.php"/.html"/g' {} \;
+          find dist -name "*.html" -type f -exec sed -i 's/href="\([^"]*\)\.php"/href="\1.html"/g' {} \;
+          find dist -name "*.html" -type f -exec sed -i 's/action="\([^"]*\)\.php"/action="\1.html"/g' {} \;
+          
+          # Specific fixes for common navigation patterns
+          find dist -name "*.html" -type f -exec sed -i 's/href="index\.php"/href="index.html"/g' {} \;
+          find dist -name "*.html" -type f -exec sed -i 's/href="about\.php"/href="about.html"/g' {} \;
+          find dist -name "*.html" -type f -exec sed -i 's/href="shop\.php"/href="shop.html"/g' {} \;
+          find dist -name "*.html" -type f -exec sed -i 's/href="login\.php"/href="login.html"/g' {} \;
+          find dist -name "*.html" -type f -exec sed -i 's/href="register\.php"/href="register.html"/g' {} \;
+          find dist -name "*.html" -type f -exec sed -i 's/href="agb\.php"/href="agb.html"/g' {} \;
+          
+          # Debug: Show what files were created and their links
+          echo "Created files:"
+          ls -la dist/
+          echo "Sample links in index.html:"
+          grep -n "href=" dist/index.html | head -10 || true
+          echo "Login links found:"
+          grep -n "login" dist/index.html || true
       - name: Setup Pages
         uses: actions/configure-pages@v4
 
