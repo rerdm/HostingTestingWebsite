@@ -21,7 +21,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Convert PHP to HTML and copy assets
+      - name: Copy HTML and assets
         run: |
           # Create output directory
           mkdir -p dist
