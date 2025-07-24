@@ -76,17 +76,9 @@ jobs: # Defines jobs to run
         environment:
             name: github-pages # Sets the deployment environment to GitHub Pages
             url: ${{ steps.deployment.outputs.page_url }} # Sets the URL for the environment using the output from the deploy step
-
-            # url: This is an environment parameter that tells GitHub "here is the URL where the website is running"
-            # ${{ }} = GitHub Actions syntax for variables/expressions
-            # steps. = Refers to other steps in this job
-            # deployment = The ID of the deploy step (line 81: id: deployment)
-            # .outputs. = Accesses the output values of this step
-            # page_url = The specific output value containing the final website URL
-            
         runs-on: ubuntu-latest # Use the latest Ubuntu runner
         needs: build # Waits for the build job to finish
         steps:
             - name: Deploy to GitHub Pages # Deploys the artifact to GitHub Pages
-                id: deployment # Sets an ID for this step to reference outputs
-                uses: actions/deploy-pages@v4 # Uses official deploy-pages action
+              id: deployment # Sets an ID for this step to reference outputs
+              uses: actions/deploy-pages@v4 # Uses official deploy-pages action
