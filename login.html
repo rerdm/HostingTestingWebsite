@@ -67,7 +67,68 @@
 
 <body class="coffee-bg min-h-screen">
     <!-- Navigation -->
-    <?php include 'includes/navbar.php'; ?>
+    <nav class="bg-amber-100 shadow-lg border-b border-amber-200">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo/Brand -->
+                <div class="flex-shrink-0">
+                    <a href="index.html" class="text-2xl font-bold text-amber-800">
+                        Testing-CoffeShop 
+                    </a>
+                </div>
+                
+                <!-- Navigation Links -->
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="index.html" class="text-amber-800 hover:bg-amber-200 hover:text-amber-900 px-3 py-2 rounded-md text-sm font-medium transition-all duration-300">
+                            Home
+                        </a>
+                        <a href="about.html" class="text-amber-800 hover:bg-amber-200 hover:text-amber-900 px-3 py-2 rounded-md text-sm font-medium transition-all duration-300">
+                            About
+                        </a>
+                        <a href="shop.html" class="text-amber-800 hover:bg-amber-200 hover:text-amber-900 px-3 py-2 rounded-md text-sm font-medium transition-all duration-300">
+                            Shop
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Right side buttons -->
+                <div class="hidden md:block">
+                    <div class="ml-4 flex items-center space-x-3">
+                        <a href="register.html" class="bg-amber-600 hover:bg-amber-700 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-amber-500/25 text-white px-4 py-2 rounded-md text-sm font-medium transition-all duration-300">
+                            Registrierung
+                        </a>
+                        <a href="login.html" class="bg-stone-600 hover:bg-stone-700 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-stone-500/25 text-white px-4 py-2 rounded-md text-sm font-medium transition-all duration-300">
+                            Login
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Mobile menu button -->
+                <div class="md:hidden">
+                    <button type="button" class="mobile-menu-button bg-amber-100 hover:bg-amber-200 hover:scale-105 inline-flex items-center justify-center p-2 rounded-md text-amber-700 hover:text-amber-800 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-amber-500 transition-all duration-300">
+                        <span class="sr-only">Hauptmenü öffnen</span>
+                        <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile menu -->
+        <div class="mobile-menu hidden md:hidden">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-amber-50">
+                <a href="index.html" class="text-amber-800 hover:bg-amber-200 hover:text-amber-900 block px-3 py-2 rounded-md text-base font-medium transition-all duration-300">Home</a>
+                <a href="about.html" class="text-amber-800 hover:bg-amber-200 hover:text-amber-900 block px-3 py-2 rounded-md text-base font-medium transition-all duration-300">About</a>
+                <a href="shop.html" class="text-amber-800 hover:bg-amber-200 hover:text-amber-900 block px-3 py-2 rounded-md text-base font-medium transition-all duration-300">Shop</a>
+                <div class="pt-3 space-y-2">
+                    <a href="register.html" class="bg-amber-600 hover:bg-amber-700 hover:shadow-lg text-white block px-3 py-2 rounded-md text-base font-medium transition-all duration-300">Registrierung</a>
+                    <a href="login.html" class="bg-stone-600 hover:bg-stone-700 hover:shadow-lg text-white block px-3 py-2 rounded-md text-base font-medium transition-all duration-300">Login</a>
+                </div>
+            </div>
+        </div>
+    </nav>
 
     <!-- Main Content -->
     <main class="flex-1">
@@ -155,7 +216,7 @@
                         <div class="text-center">
                             <p class="text-stone-600">
                                 Noch kein Konto?
-                                <a href="register.php" class="text-amber-600 hover:text-amber-700 font-semibold hover:underline transition-colors duration-300">
+                                <a href="register.html" class="text-amber-600 hover:text-amber-700 font-semibold hover:underline transition-colors duration-300">
                                     Jetzt registrieren
                                 </a>
                             </p>
@@ -170,7 +231,82 @@
     </main>
 
     <!-- Footer -->
-    <?php include 'includes/footer.php'; ?>
+    <footer class="bg-stone-800 text-white">
+        <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Links Section -->
+                 <div class="text-center">
+                    <h3 class="text-lg font-semibold mb-4">Rechtliches</h3>
+                    <ul class="space-y-2">
+                        <li>
+                            <a href="agb.html" class="text-white hover:text-white hover:underline transition-all duration-300">
+                                Allgemeine Geschäftsbedingungen
+                            </a>
+                        </li>
+                        <li>
+                            <a href="datenschutz.html" class="text-white hover:text-white hover:underline transition-all duration-300">
+                                Datenschutzerklärung
+                            </a>
+                        </li>
+                        <li>
+                            <a href="impressum.html" class="text-white hover:text-white hover:underline transition-all duration-300">
+                                Impressum
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Contact Section -->
+                <div class="text-center">
+                    <h3 class="text-lg font-semibold mb-4">Kontakt</h3>
+                    <div class="space-y-2 text-amber-200">
+                        <p>
+                            <strong>Adresse:</strong><br>
+                            Musterstraße 123<br>
+                            12345 Musterstadt<br>
+                            Deutschland
+                        </p>
+                        <p>
+                            <strong>Telefon:</strong><br>
+                            +49 (0) 123 456789
+                        </p>
+                        <p>
+                            <strong>E-Mail:</strong><br>
+                            <a href="mailto:info@meinsite.de" class="hover:text-white hover:underline transition-all duration-300">
+                                info@meinsite.de
+                            </a>
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Social Media / Additional Info -->
+                <div class="text-center">
+                    <h3 class="text-lg font-semibold mb-4">Öffnungszeiten</h3>
+                    <div class="space-y-2 text-gray-300">
+                        <p>
+                            <strong>Montag - Freitag:</strong><br>
+                            09:00 - 18:00 Uhr
+                        </p>
+                        <p>
+                            <strong>Samstag:</strong><br>
+                            10:00 - 16:00 Uhr
+                        </p>
+                        <p>
+                            <strong>Sonntag:</strong><br>
+                            Geschlossen
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Bottom Section -->
+            <div class="mt-8 pt-8 border-t border-gray-700 text-center">
+                <p class="text-gray-400">
+                    © 2025 Testing-Coffeshop. Developed by Rene Erdmann
+                </p>
+            </div>
+        </div>
+    </footer>
 
     <!-- JavaScript für Mobile Menu (falls benötigt) -->
     <script>
